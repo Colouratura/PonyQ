@@ -1,4 +1,4 @@
-const fs = require( 'fs' ); 
+const fs = require( 'fs' ),
       commander = require( 'commander' ),
       Logger = require( './logger.js' );
 
