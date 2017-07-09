@@ -1,0 +1,26 @@
+{
+  "name": "ponyq",
+  "version": "1.0.0",
+  "description": "PonyQ is a microservice that monitors the recent changes of Wikia wikis and reports the activity through several different transports.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ".git"
+  },
+  "keywords": [
+    "Pony",
+    "Query",
+    "PonyQ",
+    "Wikia",
+    "Activity",
+    "Logger",
+    "Recent",
+    "Changes",
+    "MediaWiki"
+  ],
+  "author": "Colouratura",
+  "license": "BSD-2-Clause"
+}
