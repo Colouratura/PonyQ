@@ -1,6 +1,6 @@
 let fs = require('fs'),
-	commander = require('commander'),
-	Logger = require('./logger.js');
+    commander = require('commander'),
+    Logger = require('./logger.js');
 
 // This is meta information from package.json
 const program = require('./package.json');
