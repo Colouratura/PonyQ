@@ -22,5 +22,15 @@
     "MediaWiki"
   ],
   "author": "Colouratura",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "commander": "^2.11.0",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.4",
+    "string-template": "^1.0.0"
+  },
+  "config": {
+    "config": "config.json"
+  }
 }

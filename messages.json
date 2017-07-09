@@ -1,0 +1,12 @@
+{
+	"error": {
+		"noTemplate": "Could not find template {0}",
+		"noConfig": "Exiting because {0} could not be loaded"
+	},
+	"warning": {
+		"noSuppliedConfig": "Falling back to {1} because {0} was not found"
+	},
+	"success": {
+		"loadedConfig": "Loaded config from {0}"
+	}
+}
