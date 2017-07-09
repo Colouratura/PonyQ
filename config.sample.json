@@ -1,0 +1,26 @@
+{
+    "wikis": [
+        {
+            "name": "dev",
+            "transports": [
+                {
+                    "name": "discord",
+                    "config": {
+                        "api-key": "sdfsdfsdfsdfsdf"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "mlp",
+            "transports": [
+                {
+                    "name": "discord",
+                    "config": {
+                        "api-key": "sdfsdfsdfsdfsdf"
+                    }
+                }
+            ]
+        }
+    ]
+}
