@@ -1,6 +1,6 @@
 const fs = require( 'fs' ); 
       commander = require( 'commander' ),
-	  Logger = require( './logger.js' );
+      Logger = require( './logger.js' );
 
 // This is meta information from package.json
 const program = require( './package.json' );
@@ -14,8 +14,8 @@ const program = require( './package.json' );
 commander.version( program.version )
          .option( '-v, --verbose', 'Will show errors and warnings in the console')
          .option( '-d, --dry-run', 'Will not send results to transports' )
-		 .option( '--config [value]', 'Specify a config file' )
-		 .parse( process.argv );
+         .option( '--config [value]', 'Specify a config file' )
+         .parse( process.argv );
 
 /**
  * init
