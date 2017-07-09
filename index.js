@@ -118,6 +118,11 @@ const init = function () {
 	config.wikis.forEach(function (wiki) {
 		createSaddle(wiki.name, wiki.transports);
 	});
+
+	for (let k in SADDLES) {
+		LOGGER.success('startingSaddle', [ k ]);
+		SADDLES[k].start();
+	}
 };
 
 init();

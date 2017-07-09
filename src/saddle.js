@@ -42,6 +42,10 @@ class Saddle {
 		);
 	}
 
+	start () {
+		this._logger.success('startedSaddle', [ this._uid ]);
+	}
+
 	/**
 	 * genUID
 	 * 

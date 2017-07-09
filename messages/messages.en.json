@@ -13,6 +13,8 @@
 		"registerPlugin": "{0} has been found and loaded",
 		"removedSaddle": "Removed saddle {0} successfully",
 		"uniqueID": "Found unused ID {0}",
-		"createdSaddle": "Successfully created saddle {1} for {0}.wikia.com"
+		"createdSaddle": "Successfully created saddle {1} for {0}.wikia.com",
+		"startingSaddle": "Starting saddle {0}",
+		"startedSaddle": "Successfully started saddle {0}"
 	}
 }
