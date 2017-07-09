@@ -2,13 +2,17 @@
 	"error": {
 		"noTemplate": "Could not find template {0}",
 		"noConfig": "Exiting because {0} could not be loaded",
-		"noPlugin": "Could not find {0} in transports"
+		"noPlugin": "Could not find {0} in transports",
+		"noSaddle": "Could not remove saddle {0}, does not exist"
 	},
 	"warning": {
 		"noSuppliedConfig": "Falling back to {1} because {0} was not found"
 	},
 	"success": {
 		"loadedConfig": "Loaded config from {0}",
-		"registerPlugin": "{0} has been found and loaded"
+		"registerPlugin": "{0} has been found and loaded",
+		"removedSaddle": "Removed saddle {0} successfully",
+		"uniqueID": "Found unused ID {0}",
+		"createdSaddle": "Successfully created saddle {1} for {0}.wikia.com"
 	}
 }

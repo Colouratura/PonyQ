@@ -17,26 +17,29 @@
  * closed, and the saddle must return a 300 error to the PonyQ layer.
  */
 
-let fs = require('fs');
+let fs = require('fs'),
+	ps = require('path');
 
 class Saddle {
 	/**
 	 * constructor
 	 * 
 	 * @param { String } [wiki] - wiki name to watch 
-	 * @param { Array<String> } [transports] - Names of transports to start
+	 * @param { Array<Object> } [transports] - array of transports to start
 	 * @param { Object<Logger> } [logger] - instance of the logger class 
 	 */
-	constructor(wiki, transports, logger) {
+	constructor (wiki, transports, logger) {
 		this._uid = '';
 		this._logger = logger;
 		this._wiki = wiki;
 		this._transports = {};
 
 		// Register each transport
-		transports.forEach(function(transport) {
-			this.registerTransport(transport);
-		});
+		transports.forEach(
+			function (transport) {
+				this.registerTransport(transport);
+			}.bind(this)
+		);
 	}
 
 	/**
@@ -46,7 +49,7 @@ class Saddle {
 	 * 
 	 * @return { String } 5 letter UID
 	 */
-	genUID() {
+	genUID () {
 		return Math.random().toString(36).substr(2, 5).toUpperCase();
 	}
 
@@ -57,7 +60,7 @@ class Saddle {
 	 * 
 	 * @param { String } [uid] - the saddle's UID 
 	 */
-	setUID(uid) {
+	setUID (uid) {
 		this._uid = uid;
 	}
 
@@ -66,16 +69,18 @@ class Saddle {
 	 * 
 	 * Finds, loads, and initializes transports
 	 * 
-	 * @param { String } [transport] - Name of the transport to load 
+	 * @param { Object } [transport] - Config of the transport to load 
 	 */
-	registerTransport(transport) {
-		if (fs.existsSync(`./transports/${transport}.js`)) {
-			let trns = require(`./transports/${transport}`);
-			this._transports[transport] = new trsn();
+	registerTransport (transport) {
+		let transportFile = ps.resolve(__dirname, `../transports/${transport.name}.js`);
 
-			this._logger.success('registerPlugin', [ transport ]);
+		if (fs.existsSync(transportFile)) {
+			this._transports[transport.name] = new (require(transportFile))(transport.config);
+			this._logger.success('registerPlugin', [ transport.name ]);
 		} else {
-			this.logger.error('noPlugin', [ transport ]);
+			this._logger.error('noPlugin', [ transportFile ]);
 		}
 	}
 }
+
+module.exports = Saddle;

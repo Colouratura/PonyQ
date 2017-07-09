@@ -1,9 +1,13 @@
 let fs = require('fs'),
-    commander = require('commander'),
-    Logger = require('./logger.js');
+	commander = require('commander'),
+	Logger = require('./src/logger.js'),
+	Saddle = require('./src/saddle.js');
 
 // This is meta information from package.json
 const program = require('./package.json');
+
+let SADDLES = {},
+	LOGGER = {};
 
 /**
  * Set up our command-line options
@@ -19,6 +23,64 @@ commander
 	.parse(process.argv);
 
 /**
+ * removeSaddle
+ * 
+ * Removes a saddle from operation
+ * 
+ * @param { String } [uid] - uid of the saddle to remove
+ */
+const removeSaddle = function (uid) {
+	if (SADDLES.hasOwnProperty(uid)) {
+		delete SADDLES[uid];
+		LOGGER.success('removedSaddle', [ uid ]);
+	} else {
+		LOGGER.error('noSaddle', [ uid ]);
+	}
+};
+
+/**
+ * getSaddleID
+ * 
+ * Gets and sets a unique saddle ID
+ * 
+ * @param { Object<Saddle> } [saddle] - initialized saddle object
+ * @return { String } UID
+ */
+const getSaddleID = function (saddle) {
+	let UID = '';
+
+	while (true) {
+		let saddleUID = saddle.genUID();
+
+		if (!SADDLES.hasOwnProperty(saddleUID)) {
+			LOGGER.success('uniqueID', [ saddleUID ]);
+			UID = saddleUID;
+			break;
+		}
+	}
+
+	return UID;
+};
+
+/**
+ * createSaddle
+ * 
+ * Creates a saddle
+ * 
+ * @param { String } [wiki] - wiki name to watch
+ * @param { Array<Object> } [transports] - array of transports and their settings
+ */
+const createSaddle = function (wiki, transports) {
+	let saddle = new Saddle(wiki, transports, LOGGER),
+		saddleUID = getSaddleID(saddle);
+
+	SADDLES[saddleUID] = saddle;
+	saddle.setUID(saddleUID);
+
+	LOGGER.success('createdSaddle', [ wiki, saddle._uid ]);
+};
+
+/**
  * init
  * 
  * Initializes the PonyQ process that proceeds to load and configure
@@ -32,23 +94,27 @@ const init = function () {
 	let configFile = commander.config !== undefined ? commander.config : program.config.config;
 
 	// Instantiate logger
-	const logger = new Logger(commander.verbose);
+	LOGGER = new Logger(commander.verbose);
 
 	// Load the config
 	if (fs.existsSync(configFile)) {
 		config = require(`./${configFile}`);
-		logger.success('loadedConfig', [ configFile ]);
+		LOGGER.success('loadedConfig', [ configFile ]);
 	} else {
-		logger.warn('noSuppliedConfig', [ configFile, program.config.config ]);
+		LOGGER.warn('noSuppliedConfig', [ configFile, program.config.config ]);
 
 		try {
 			config = require(`./${program.config.config}`);
-			logger.success('loadedConfig', [ program.config.config ]);
+			LOGGER.success('loadedConfig', [ program.config.config ]);
 		} catch (e) {
-			logger.error('noConfig', [ program.config.config ]);
+			LOGGER.error('noConfig', [ program.config.config ]);
 			return;
 		}
 	}
+
+	config.wikis.forEach(function (wiki) {
+		createSaddle(wiki.name, wiki.transports);
+	});
 };
 
 init();
