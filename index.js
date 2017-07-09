@@ -24,7 +24,7 @@ commander
  * Initializes the PonyQ process that proceeds to load and configure
  * the transports.
  */
-const init = function() {
+const init = function () {
 	let dry = commander.dry,
 		config = {};
 
