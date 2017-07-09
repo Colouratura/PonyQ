@@ -12,14 +12,17 @@ let SADDLES = {},
 /**
  * Set up our command-line options
  * 
+ * [-v] With this flag set loggers will do something
  * [-d] With this flag set the program will not log to transports
  * [-c] Specifies an alternative config file [default: config.json]
+ * [-l] Specified the language to use [default: en]
  */
 commander
 	.version(program.version)
 	.option('-v, --verbose', 'Will show errors and warnings in the console')
 	.option('-d, --dry-run', 'Will not send results to transports')
 	.option('--config [value]', 'Specify a config file')
+	.option('--lang [value]', 'Specify an output language')
 	.parse(process.argv);
 
 /**
@@ -94,7 +97,7 @@ const init = function () {
 	let configFile = commander.config !== undefined ? commander.config : program.config.config;
 
 	// Instantiate logger
-	LOGGER = new Logger(commander.verbose);
+	LOGGER = new Logger(commander.verbose, commander.lang);
 
 	// Load the config
 	if (fs.existsSync(configFile)) {

@@ -5,7 +5,9 @@
  * through which colored console messages can be sent.
  */
 
-let colors = require('colors'),
+let fs = require('fs'),
+	ps = require('path'),
+	colors = require('colors'),
 	format = require('string-template');
 
 class Logger {
@@ -16,9 +18,27 @@ class Logger {
 	 * 
 	 * @param { Boolean } [verbose] - Whether or not to enable verbose output 
 	 */
-	constructor (verbose) {
+	constructor (verbose, lang) {
 		this._verbose = !verbose;
-		this._messages = require('../messages.json');
+		this._messages = this._loadMessages(lang);
+	}
+
+	/**
+	 * _loadMessages
+	 * 
+	 * Loads the language specific system messages
+	 * 
+	 * @param { String } [lang] - language code to load 
+	 */
+	_loadMessages (lang) {
+		let langPath = ps.resolve(__dirname, `../messages/messages.${lang}.json`),
+			englPath = ps.resolve(__dirname, `../messages/messages.en.json`);
+
+		if (fs.existsSync(langPath)) {
+			return require(langPath);
+		} else {
+			return require(englPath);
+		}
 	}
 
 	/**
