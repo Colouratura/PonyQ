@@ -5,8 +5,8 @@
  * through which colored console messages can be sent.
  */
 
-const colors = require( 'colors' ),
-      format = require( 'string-template' );
+let colors = require('colors'),
+	format = require('string-template');
 
 class Logger {
 	/**
@@ -16,9 +16,9 @@ class Logger {
 	 * 
 	 * @param { Boolean } [verbose] - Whether or not to enable verbose output 
 	 */
-	constructor ( verbose ) {
+	constructor(verbose) {
 		this._verbose = !verbose;
-		this._messages = require( './messages.json' );
+		this._messages = require('./messages.json');
 	}
 
 	/**
@@ -30,17 +30,13 @@ class Logger {
 	 * @param { String } [template] - Template to render 
 	 * @param { Array<String> } [args] - Template parameters 
 	 */
-	_render ( type, template, args ) {
-		if ( this._verbose ) return;
+	_render(type, template, args) {
+		if (this._verbose) return;
 
-		let msg = format( this._messages[ type ][ template ], args ),
-		    clr = ( type === 'success' )
-				? 'green'
-				: ( type === 'warning' )
-					? 'yellow'
-					: 'red';
-		
-		console.log( `[${ type.toUpperCase() }] ${ msg }`[ clr ] );
+		let msg = format(this._messages[type][template], args),
+			clr = type === 'success' ? 'green' : type === 'warning' ? 'yellow' : 'red';
+
+		console.log(`[${type.toUpperCase()}] ${msg}`[clr]);
 	}
 
 	/**
@@ -51,11 +47,11 @@ class Logger {
 	 * @param { String } [template] - Name of the template to render
 	 * @param { Array<String> } [args] - Array of template parameters 
 	 */
-	error ( template, args ) {
-		if ( this._messages.error.hasOwnProperty( template ) ) {
-			this._render( 'error', template, args );
+	error(template, args) {
+		if (this._messages.error.hasOwnProperty(template)) {
+			this._render('error', template, args);
 		} else {
-			this._render( 'error', 'noTemplate', [ template ] );
+			this._render('error', 'noTemplate', [ template ]);
 		}
 	}
 
@@ -67,14 +63,14 @@ class Logger {
 	 * @param { String } [template] - Name of the template to render
 	 * @param { Array<String> } [args] - Array of template parameters 
 	 */
-	warn ( template, args ) {
-		if ( this._messages.warning.hasOwnProperty( template ) ) {
-			this._render( 'warning', template, args );
+	warn(template, args) {
+		if (this._messages.warning.hasOwnProperty(template)) {
+			this._render('warning', template, args);
 		} else {
-			this._render( 'error', 'noTemplate', [ template ] );
+			this._render('error', 'noTemplate', [ template ]);
 		}
 	}
-	
+
 	/**
 	 * success
 	 * 
@@ -83,11 +79,11 @@ class Logger {
 	 * @param { String } [template] - Name of the template to render
 	 * @param { Array<String> } [args] - Array of template parameters 
 	 */
-	success ( template, args ) {
-		if ( this._messages.success.hasOwnProperty( template ) ) {
-			this._render( 'success', template, args );
+	success(template, args) {
+		if (this._messages.success.hasOwnProperty(template)) {
+			this._render('success', template, args);
 		} else {
-			this._render( 'error', 'noTemplate', [ template ] );
+			this._render('error', 'noTemplate', [ template ]);
 		}
 	}
 }
